@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{083FCD22-2129-8A26-7DC9-1E85DE166DAC}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_OSX;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_GAMECENTER;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_2_1;UNITY_4_2;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+	<Reference Include="System" />
+    <Reference Include="System.XML" />
+	<Reference Include="System.Core" />
+	<Reference Include="UnityEngine">
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
+	</Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\LegTestScript.cs" />
+     <Compile Include="Assets\Scripts\AnimationScripts\AnimationBase.cs" />
+     <Compile Include="Assets\Scripts\AnimationScripts\AnimationGenerator.cs" />
+     <Compile Include="Assets\Scripts\AnimationScripts\ClipContainer.cs" />
+     <Compile Include="Assets\Scripts\AnimationScripts\IdleAnimation.cs" />
+     <Compile Include="Assets\Scripts\AnimationScripts\WalkAnimation.cs" />
+     <Compile Include="Assets\Scripts\Bezier3D.cs" />
+     <Compile Include="Assets\Scripts\BodyBase.cs" />
+     <Compile Include="Assets\Scripts\BodySegmentMesh.cs" />
+     <Compile Include="Assets\Scripts\CameraFly.cs" />
+     <Compile Include="Assets\Scripts\CompositeBezier3D.cs" />
+     <Compile Include="Assets\Scripts\CreatureBase.cs" />
+     <Compile Include="Assets\Scripts\CreatureSpecies.cs" />
+     <Compile Include="Assets\Scripts\DataContainerClasses\BaseData.cs" />
+     <Compile Include="Assets\Scripts\DataContainerClasses\BodySegmentMeshData.cs" />
+     <Compile Include="Assets\Scripts\DataContainerClasses\LegData.cs" />
+     <Compile Include="Assets\Scripts\DataContainerClasses\SpineData.cs" />
+     <Compile Include="Assets\Scripts\ForestCreator.cs" />
+     <Compile Include="Assets\Scripts\FruitBase.cs" />
+     <Compile Include="Assets\Scripts\HeadMesh.cs" />
+     <Compile Include="Assets\Scripts\JointSolver.cs" />
+     <Compile Include="Assets\Scripts\LODManager.cs" />
+     <Compile Include="Assets\Scripts\LegScript.cs" />
+     <Compile Include="Assets\Scripts\LegTestScript2.cs" />
+     <Compile Include="Assets\Scripts\MeshBuilder.cs" />
+     <Compile Include="Assets\Scripts\ObjectThrower.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGBase.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGCube.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGCylinder.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGFruit.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGGrassStrip.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGMeshBuilder.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGPlane.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGQuad.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGRock.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGTreeBase.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGTreeLeaf.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGTreeTrunk.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGTreeTrunkSimple.cs" />
+     <Compile Include="Assets\Scripts\PGAnimationController.cs" />
+     <Compile Include="Assets\Scripts\ProcBase.cs" />
+     <Compile Include="Assets\Scripts\RevolvedCurveMesh.cs" />
+     <Compile Include="Assets\Scripts\TerrainGenerator.cs" />
+     <Compile Include="Assets\Scripts\Test Scripts\BodySegmentTest.cs" />
+     <Compile Include="Assets\Scripts\Test Scripts\HeadBuilderTest.cs" />
+     <Compile Include="Assets\Scripts\Test Scripts\LegSolverTest.cs" />
+     <Compile Include="Assets\Scripts\Test Scripts\SpineSolverTest.cs" />
+     <Compile Include="Assets\Scripts\TestScript.cs" />
+     <Compile Include="Assets\Scripts\TextureBuilder.cs" />
+     <Compile Include="Assets\Scripts\TreeSpecies.cs" />
+     <Compile Include="Assets\Scripts\WorldCreator.cs" />
+     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />
+     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-BasicOutline.shader" />
+     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-LightedOutline.shader" />
+     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Lighted.shader" />
+ <Reference Include="Library\ScriptAssemblies\Assembly-UnityScript-firstpass">
+ <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
+      <Project>{F2D37E68-A971-BF73-D33F-75C5CB3C87D7}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>

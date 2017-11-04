@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <RootNamespace></RootNamespace>
+    <ProjectGuid>{083FCD22-2129-8A26-7DC9-1E85DE166DAC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <BaseDirectory>Assets</BaseDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_4_1;UNITY_5_4;UNITY_5;UNITY_ANALYTICS;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_EDITOR_RETINA;ENABLE_RETINA_GUISTYLES;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_STANDALONE_OSX;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_GAMECENTER;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_OSX;UNITY_TEAM_LICENSE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Temp\bin\Release\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="UnityEngine">
+      <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEditor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\LegTestScript.cs" />
+     <Compile Include="Assets\Scripts\AnimationScripts\AnimationBase.cs" />
+     <Compile Include="Assets\Scripts\AnimationScripts\AnimationGenerator.cs" />
+     <Compile Include="Assets\Scripts\AnimationScripts\ClipContainer.cs" />
+     <Compile Include="Assets\Scripts\AnimationScripts\IdleAnimation.cs" />
+     <Compile Include="Assets\Scripts\AnimationScripts\WalkAnimation.cs" />
+     <Compile Include="Assets\Scripts\Bezier3D.cs" />
+     <Compile Include="Assets\Scripts\BodyBase.cs" />
+     <Compile Include="Assets\Scripts\BodySegmentMesh.cs" />
+     <Compile Include="Assets\Scripts\CameraFly.cs" />
+     <Compile Include="Assets\Scripts\CompositeBezier3D.cs" />
+     <Compile Include="Assets\Scripts\CreatureBase.cs" />
+     <Compile Include="Assets\Scripts\CreatureSpecies.cs" />
+     <Compile Include="Assets\Scripts\DataContainerClasses\BaseData.cs" />
+     <Compile Include="Assets\Scripts\DataContainerClasses\BodySegmentMeshData.cs" />
+     <Compile Include="Assets\Scripts\DataContainerClasses\LegData.cs" />
+     <Compile Include="Assets\Scripts\DataContainerClasses\SpineData.cs" />
+     <Compile Include="Assets\Scripts\ForestCreator.cs" />
+     <Compile Include="Assets\Scripts\FruitBase.cs" />
+     <Compile Include="Assets\Scripts\HeadMesh.cs" />
+     <Compile Include="Assets\Scripts\JointSolver.cs" />
+     <Compile Include="Assets\Scripts\LODManager.cs" />
+     <Compile Include="Assets\Scripts\LegScript.cs" />
+     <Compile Include="Assets\Scripts\LegTestScript2.cs" />
+     <Compile Include="Assets\Scripts\MeshBuilder.cs" />
+     <Compile Include="Assets\Scripts\ObjectThrower.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGBase.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGCube.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGCylinder.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGFruit.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGGrassStrip.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGMeshBuilder.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGPlane.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGQuad.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGRock.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGTree2.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGTreeBase.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGTreeLeaf.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGTreeTrunk.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGTreeTrunkSimple.cs" />
+     <Compile Include="Assets\Scripts\PGAnimationController.cs" />
+     <Compile Include="Assets\Scripts\ProcBase.cs" />
+     <Compile Include="Assets\Scripts\RevolvedCurveMesh.cs" />
+     <Compile Include="Assets\Scripts\TerrainGenerator.cs" />
+     <Compile Include="Assets\Scripts\Test Scripts\BodySegmentTest.cs" />
+     <Compile Include="Assets\Scripts\Test Scripts\HeadBuilderTest.cs" />
+     <Compile Include="Assets\Scripts\Test Scripts\LegSolverTest.cs" />
+     <Compile Include="Assets\Scripts\Test Scripts\SpineSolverTest.cs" />
+     <Compile Include="Assets\Scripts\Test Scripts\TreeTest.cs" />
+     <Compile Include="Assets\Scripts\TestScript.cs" />
+     <Compile Include="Assets\Scripts\TextureBuilder.cs" />
+     <Compile Include="Assets\Scripts\TreeSpecies.cs" />
+     <Compile Include="Assets\Scripts\WorldCreator.cs" />
+     <Compile Include="Assets\Scripts2.0\ProcTree\Branch.cs" />
+     <Compile Include="Assets\Scripts2.0\ProcTree\ProcTree.cs" />
+     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />
+     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-BasicOutline.shader" />
+     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-LightedOutline.shader" />
+     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Lighted.shader" />
+ <Reference Include="Assembly-UnityScript-firstpass">
+ <HintPath>/Users/alexpech12/ProcGeom/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Networking">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.UI">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Analytics">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{F2D37E68-A971-BF73-D33F-75C5CB3C87D7}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>
