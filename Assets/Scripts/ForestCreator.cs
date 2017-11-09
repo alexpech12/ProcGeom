@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 public class ForestCreator : MonoBehaviour {
 
-	private int speciesNum = 1;
+	public int speciesNum = 1;
 	private Terrain terrain;
 	
 	public List<TreeSpecies> Species { get { return m_Species; } }

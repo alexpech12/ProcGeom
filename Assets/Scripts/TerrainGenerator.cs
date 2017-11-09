@@ -5,6 +5,8 @@ public class TerrainGenerator : MonoBehaviour {
 	
 	private bool generateTrees = true;
 	
+	public bool generateGrass = true;
+
 	public Texture2D grassTexture;
 	public Texture2D stoneTexture;
 	
@@ -96,11 +98,12 @@ public class TerrainGenerator : MonoBehaviour {
 	}
 	
 	void Update() {
-		
-		if (grassCount < grassMax && grassCount < grassMaxCap) {
-			GenerateGrass(grassLoadedPerUpdate,xMin,xMax,zMin,zMax);
-			grassCount += grassLoadedPerUpdate;
-			Debug.Log("grassCount = " + grassCount);
+		if (generateGrass) {
+			if (grassCount < grassMax && grassCount < grassMaxCap) {
+				GenerateGrass(grassLoadedPerUpdate,xMin,xMax,zMin,zMax);
+				grassCount += grassLoadedPerUpdate;
+				Debug.Log("grassCount = " + grassCount);
+			}
 		}
 		/*
 		if (rockCount < rockMax && rockCount < rockMaxCap) {

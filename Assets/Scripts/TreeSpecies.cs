@@ -165,13 +165,17 @@ public class TreeSpecies : MonoBehaviour {
 		}
 		
 		// Generate tree texture
+		GenerateMaterials();
+	}
+	
+	public void GenerateMaterials() {
 		m_trunk_mat = new Material(Shader.Find("Diffuse"));
 		m_trunk_mat.SetTexture("_MainTex", GenerateTrunkTexture(m_trunk_texture_size));
 		
 		m_leaf_mat = new Material(Shader.Find("Transparent/Cutout/Diffuse"));
 		m_leaf_mat.SetTexture("_MainTex",GenerateLeafTexture(m_leaf_texture_size));
-	}
-	
+	} 
+
 	private Texture2D GenerateTrunkTexture(int size) {
 		
 		TextureBuilder texturer = new TextureBuilder();

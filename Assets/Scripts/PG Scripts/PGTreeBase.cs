@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class PGTreeBase : MonoBehaviour {
 	
+	public int m_seed = 0;
+
 	public float m_height = 3.0f;
 	public float m_start_radius = 1.5f;
 	public float m_end_radius = 1.0f;
@@ -95,41 +97,61 @@ public class PGTreeBase : MonoBehaviour {
 	
 	public TreeSpecies treeSpecies = null;
 	
-	private void Start()
+	private GameObject trunkObject;
+	private GameObject leafObject;
+	private CapsuleCollider collider;
+
+	public void Reset() {
+		// Destroy all generated content
+		foreach ( Transform child in transform) {
+			Destroy(child.gameObject);
+		}
+		Destroy(collider);
+	}
+
+	public void Init() { Init(m_seed); }
+
+	public void Init(int seed)
 	{
+
+		Random.InitState(seed);
+
+		treeSpecies = gameObject.GetComponent<TreeSpecies>();
 		// Load variables from species creator
 		if(treeSpecies == null) {
-			Debug.LogError("ERROR: No tree species declared!");
+			Debug.LogError("ERROR: No tree species attached!");
 		}
 		GetVariablesFromSpecies();
+		treeSpecies.GenerateMaterials();
 		
 		//LODManager lodManager = new LODManager();
 		
-		GameObject trunkObject = new GameObject("Trunk");
+		trunkObject = new GameObject("Trunk");
 		trunkObject.transform.parent = transform;
 		trunkObject.transform.localPosition = Vector3.zero; // Remove offset from parenting
-		trunkObject.AddComponent<PGTreeTrunkSimple>();
+		PGTreeTrunkSimple trunkScript = trunkObject.AddComponent<PGTreeTrunkSimple>();
 		trunkObject.AddComponent<MeshRenderer>();
 		trunkObject.GetComponent<Renderer>().material = treeSpecies.m_trunk_mat;
 		
-		PGTreeTrunkSimple trunkScript = trunkObject.GetComponent("PGTreeTrunkSimple") as PGTreeTrunkSimple;
 		trunkScript.CreateObject(true);
 		
 		// Add collider
-		CapsuleCollider collider = trunkObject.AddComponent<CapsuleCollider>();
+		collider = trunkObject.AddComponent<CapsuleCollider>();
 		collider.radius = (m_start_radius+m_end_radius)/2.0f;
 		collider.height = m_height;
 		collider.center = new Vector3(0.0f,m_height/2.0f-collider.radius,0.0f);
 		
-		GameObject leafObject = new GameObject("Leaves");
-		leafObject.transform.parent = transform;
-		leafObject.transform.localPosition = Vector3.zero; // Remove offset from parenting
-		leafObject.AddComponent<PGTreeLeaf>();
-		leafObject.AddComponent<MeshRenderer>();
-		leafObject.GetComponent<Renderer>().material = treeSpecies.m_leaf_mat;
-		
-		PGTreeLeaf leafScript = leafObject.GetComponent<PGTreeLeaf>();
-		leafScript.CreateObject(true);
+		if(m_hasLeaves) {
+			leafObject = new GameObject("Leaves");
+			leafObject.transform.parent = transform;
+			leafObject.transform.localPosition = Vector3.zero; // Remove offset from parenting
+			leafObject.AddComponent<PGTreeLeaf>();
+			leafObject.AddComponent<MeshRenderer>();
+			leafObject.GetComponent<Renderer>().material = treeSpecies.m_leaf_mat;
+			
+			PGTreeLeaf leafScript = leafObject.GetComponent<PGTreeLeaf>();
+			leafScript.CreateObject(true);
+		}
 		
 		// Add fruit
 		if(m_has_fruit) {

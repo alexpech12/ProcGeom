@@ -5,6 +5,8 @@ Project("{E06D9046-FAB1-14F4-C51C-BE0D3D006672}") = "ProcGeom", "Assembly-CSharp
 EndProject
 Project("{E06D9046-FAB1-14F4-C51C-BE0D3D006672}") = "ProcGeom", "Assembly-CSharp.csproj", "{083FCD22-2129-8A26-7DC9-1E85DE166DAC}"
 EndProject
+Project("{E06D9046-FAB1-14F4-C51C-BE0D3D006672}") = "ProcGeom", "Assembly-CSharp-Editor.csproj", "{93AA3479-E5F8-548D-E9EE-6D45ABAE2174}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{083FCD22-2129-8A26-7DC9-1E85DE166DAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{083FCD22-2129-8A26-7DC9-1E85DE166DAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{083FCD22-2129-8A26-7DC9-1E85DE166DAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93AA3479-E5F8-548D-E9EE-6D45ABAE2174}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93AA3479-E5F8-548D-E9EE-6D45ABAE2174}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93AA3479-E5F8-548D-E9EE-6D45ABAE2174}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93AA3479-E5F8-548D-E9EE-6D45ABAE2174}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
