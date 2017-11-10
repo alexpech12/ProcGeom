@@ -126,31 +126,31 @@ public class PGTreeBase : MonoBehaviour {
 		
 		//LODManager lodManager = new LODManager();
 		
-		trunkObject = new GameObject("Trunk");
-		trunkObject.transform.parent = transform;
+		//trunkObject = new GameObject("Trunk");
+		//trunkObject.transform.parent = transform;
+		trunkObject = gameObject.EnsureChildGameObject("Trunk");
 		trunkObject.transform.localPosition = Vector3.zero; // Remove offset from parenting
-		PGTreeTrunkSimple trunkScript = trunkObject.AddComponent<PGTreeTrunkSimple>();
-		trunkObject.AddComponent<MeshRenderer>();
+		PGTreeTrunkSimple trunkScript = trunkObject.EnsureComponent<PGTreeTrunkSimple>(); //trunkObject.AddComponent<PGTreeTrunkSimple>();
+		trunkObject.EnsureComponent<MeshRenderer>(); //trunkObject.AddComponent<MeshRenderer>();
 		trunkObject.GetComponent<Renderer>().material = treeSpecies.m_trunk_mat;
 		
-		trunkScript.CreateObject(true);
+		trunkScript.CreateObject(false);
 		
 		// Add collider
-		collider = trunkObject.AddComponent<CapsuleCollider>();
+		collider = trunkObject.EnsureComponent<CapsuleCollider>();
 		collider.radius = (m_start_radius+m_end_radius)/2.0f;
 		collider.height = m_height;
 		collider.center = new Vector3(0.0f,m_height/2.0f-collider.radius,0.0f);
 		
 		if(m_hasLeaves) {
-			leafObject = new GameObject("Leaves");
-			leafObject.transform.parent = transform;
+			leafObject = gameObject.EnsureChildGameObject("Leaves");
+			//leafObject.transform.parent = transform;
 			leafObject.transform.localPosition = Vector3.zero; // Remove offset from parenting
-			leafObject.AddComponent<PGTreeLeaf>();
-			leafObject.AddComponent<MeshRenderer>();
+			PGTreeLeaf leafScript = leafObject.EnsureComponent<PGTreeLeaf>();
+			leafObject.EnsureComponent<MeshRenderer>();
 			leafObject.GetComponent<Renderer>().material = treeSpecies.m_leaf_mat;
 			
-			PGTreeLeaf leafScript = leafObject.GetComponent<PGTreeLeaf>();
-			leafScript.CreateObject(true);
+			leafScript.CreateObject(false);
 		}
 		
 		// Add fruit

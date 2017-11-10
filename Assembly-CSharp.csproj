@@ -63,6 +63,7 @@
      <Compile Include="Assets\Scripts\DataContainerClasses\BodySegmentMeshData.cs" />
      <Compile Include="Assets\Scripts\DataContainerClasses\LegData.cs" />
      <Compile Include="Assets\Scripts\DataContainerClasses\SpineData.cs" />
+     <Compile Include="Assets\Scripts\Extensions.cs" />
      <Compile Include="Assets\Scripts\ForestCreator.cs" />
      <Compile Include="Assets\Scripts\FruitBase.cs" />
      <Compile Include="Assets\Scripts\HeadMesh.cs" />
@@ -91,6 +92,7 @@
      <Compile Include="Assets\Scripts\ProcBase.cs" />
      <Compile Include="Assets\Scripts\PropertyList.cs" />
      <Compile Include="Assets\Scripts\RevolvedCurveMesh.cs" />
+     <Compile Include="Assets\Scripts\SliderTextOutput.cs" />
      <Compile Include="Assets\Scripts\TerrainGenerator.cs" />
      <Compile Include="Assets\Scripts\Test Scripts\BodySegmentTest.cs" />
      <Compile Include="Assets\Scripts\Test Scripts\HeadBuilderTest.cs" />
@@ -100,6 +102,7 @@
      <Compile Include="Assets\Scripts\TestScript.cs" />
      <Compile Include="Assets\Scripts\TextureBuilder.cs" />
      <Compile Include="Assets\Scripts\TreeSpecies.cs" />
+     <Compile Include="Assets\Scripts\TreeSpeciesSliderUpdate.cs" />
      <Compile Include="Assets\Scripts\WorldCreator.cs" />
      <Compile Include="Assets\Scripts2.0\ProcTree\Branch.cs" />
      <Compile Include="Assets\Scripts2.0\ProcTree\ProcTree.cs" />

@@ -4,6 +4,9 @@ using System.Collections;
 // A class to hold all genetic information involved in creating a type of tree.
 public class TreeSpecies : MonoBehaviour {
 	
+	// Dictionary of tree variables
+	//public Dictionary<string, Object> m_properties = new Dictionary<string, Object>();
+
 	// Tree properties
 	public string species_name = "DefaultTreeSpecies";
 	public float rarity = 1.0f;
@@ -123,6 +126,11 @@ public class TreeSpecies : MonoBehaviour {
 	Color treeColorSpecialVar = new Color(0.4f,0.4f,0.4f,1.0f);
 	float specialChance = 0.1f;
 	
+	public void SetProperty<T>(string property, T value)
+	{
+		//this.GetType().GetField(property)
+	}
+
 	public void CreateNewSpecies() {
 		// Generate random variables
 		m_height = Random.Range(1.0f,10.0f);

@@ -19,14 +19,10 @@ public abstract class PGBase : MonoBehaviour {
 		Mesh mesh = BuildMesh(generateLODs);
 
 		//Look for a MeshFilter component attached to this GameObject:
-		MeshFilter filter = GetComponent<MeshFilter>();
+		MeshFilter filter = gameObject.EnsureComponent<MeshFilter>();
 		
-		//If the MeshFilter exists, attach the new mesh to it.
-		//Assuming the GameObject also has a renderer attached, our new mesh will now be visible in the scene.
-		if (filter == null)
-		{
-			filter = gameObject.AddComponent<MeshFilter>() as MeshFilter;
-		}
+		//Destroy(filter.sharedMesh);
+
 		filter.sharedMesh = mesh;
 		
 		MeshRenderer renderer = GetComponent<MeshRenderer>();
@@ -39,7 +35,7 @@ public abstract class PGBase : MonoBehaviour {
 	}
 	
 	private void SetupLODs() {
-		LODManager lodManager = gameObject.AddComponent<LODManager>();
+		LODManager lodManager = gameObject.EnsureComponent<LODManager>();
 		MeshFilter filter = GetComponent<MeshFilter>();
 		GenerateLODs(lodManager, filter);
 	}

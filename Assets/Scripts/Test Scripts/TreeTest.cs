@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class TreeTest : MonoBehaviour {
 
@@ -7,8 +8,19 @@ public class TreeTest : MonoBehaviour {
 
 	public void RefreshTree() {
 		Debug.Log("Generating new tree...");
-		PGTreeBase tree = gameObject.GetComponent<PGTreeBase>();
-		tree.Reset();
+		//PGTreeBase tree = gameObject.GetComponent<PGTreeBase>();
+		//tree.Reset();
+		Invoke("InitSeed", 0f);
+	}
+
+	public void RefreshTreeRandom() {
+		Debug.Log("Generating new random tree...");
+		int startSeed = (int)System.DateTime.Now.Ticks;
+		Debug.Log(startSeed);
+		Random.InitState(startSeed);
+		seed = Mathf.RoundToInt(Random.Range(1,System.Int32.MaxValue));
+		InputField inputField = GameObject.Find("SeedInputField").GetComponent<InputField>();
+		inputField.text = seed.ToString();
 		Invoke("InitSeed", 0f);
 	}
 

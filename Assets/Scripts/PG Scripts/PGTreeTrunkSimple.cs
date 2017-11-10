@@ -56,6 +56,9 @@ public class PGTreeTrunkSimple : PGBase {
 		
 		// Set variables from parent
 		PGTreeBase p = transform.parent.GetComponent("PGTreeBase") as PGTreeBase;
+
+		// Ensure leaf list is empty
+		m_Leaves.Clear();
 		
 		MeshBuilder meshBuilder = new MeshBuilder();
 		
