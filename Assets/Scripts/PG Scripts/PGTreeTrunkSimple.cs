@@ -55,7 +55,8 @@ public class PGTreeTrunkSimple : PGBase {
 	private Mesh BuildTrunk(bool setupLOD) {
 		
 		// Set variables from parent
-		PGTreeBase p = transform.parent.GetComponent("PGTreeBase") as PGTreeBase;
+		//PGTreeBase p = transform.parent.GetComponent("PGTreeBase") as PGTreeBase;
+		TreeSpecies p = transform.parent.GetComponent<TreeSpecies>();
 
 		// Ensure leaf list is empty
 		m_Leaves.Clear();

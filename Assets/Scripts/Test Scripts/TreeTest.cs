@@ -34,6 +34,10 @@ public class TreeTest : MonoBehaviour {
 		seed = int.Parse(new_seed);
 	}
 
+	void Start() {
+		RefreshTreeRandom();
+	}
+
 	void Update () {
 
 		// Place tree on top of terrain

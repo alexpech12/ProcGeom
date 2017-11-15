@@ -142,15 +142,20 @@ public class PGTreeBase : MonoBehaviour {
 		collider.height = m_height;
 		collider.center = new Vector3(0.0f,m_height/2.0f-collider.radius,0.0f);
 		
-		if(m_hasLeaves) {
+		if(treeSpecies.m_hasLeaves) {
 			leafObject = gameObject.EnsureChildGameObject("Leaves");
 			//leafObject.transform.parent = transform;
 			leafObject.transform.localPosition = Vector3.zero; // Remove offset from parenting
 			PGTreeLeaf leafScript = leafObject.EnsureComponent<PGTreeLeaf>();
 			leafObject.EnsureComponent<MeshRenderer>();
 			leafObject.GetComponent<Renderer>().material = treeSpecies.m_leaf_mat;
-			
+
 			leafScript.CreateObject(false);
+		} else {
+			Transform leafTransform = transform.Find("Leaves");
+			if(leafTransform != null) {
+				Destroy(leafTransform.gameObject);
+			}
 		}
 		
 		// Add fruit
