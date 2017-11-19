@@ -1,15 +1,66 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class PGTreeTrunkSimple : PGBase {
+public class PGTree : PGBase {
 	
-	public enum TrunkCurveType{
-		Circular,
-		Exponential,
-		ExpoLinear
-	};
-	
+	public class ForkConstruct {
+
+		public struct BranchPoint 
+		{
+			public Vector3 position;
+			public Quaternion rotation;
+			public Vector3 direction;
+			public float radius;
+			public BranchPoint(Vector3 position, Quaternion rotation, Vector3 direction, float radius) {
+				this.position = position;
+				this.rotation = rotation;
+				this.direction = direction;
+				this.radius = radius;
+			}
+		}
+
+		// Point and rotation of final ring of previous branch
+		Vector3 position;
+		Quaternion rotation;
+
+		// Angle of the main branch
+		float branchAngle;
+
+		// Indices of vertices to connect to
+		int startIndex, endIndex;
+
+		// Branch point outputs
+		public BranchPoint mainBranchPoint;
+		public BranchPoint secondBranchPoint;
+
+		public ForkConstruct(Vector3 position, Quaternion rotation, float branchAngle, int startIndex, int endIndex) {
+			this.position = position;
+			this.rotation = rotation;
+			this.branchAngle = branchAngle;
+			this.startIndex = startIndex;
+			this.endIndex = endIndex;
+
+			// Create 2 branch points
+
+			// Main branch
+			//Vector3 mainPosition = 
+			mainBranchPoint = new BranchPoint();
+
+		}
+
+		public Vector3 mainBranchPosition() {
+			return Vector3.zero;
+		}
+
+		public Quaternion mainBranchRotation() {
+			return Quaternion.identity;
+		}
+
+		public Vector3 branchDirection;
+	}
+
 	public struct LeafConstruct{
 		public Vector3 position;
 		public Quaternion rotation;
@@ -28,8 +79,8 @@ public class PGTreeTrunkSimple : PGBase {
 	private List<LeafConstruct> m_Leaves = new List<LeafConstruct>();
 	
 	// Frequency variables for trunk vertex offsets
-	int[] frequencies;
-	float[] frequency_offsets;
+	int[] m_frequencies;
+	float[] m_frequency_offsets;
 	float irregularity; // Irregularity is the amount the frequencies are applied
 	
 	public override Mesh BuildMesh()
@@ -52,75 +103,104 @@ public class PGTreeTrunkSimple : PGBase {
 		// Create an irregular trunk shape by blending some sin waves
 		
 		// Generate 2 random harmonic frequencies to blend.
-		frequencies = new int[] { UnityEngine.Random.Range(1,5)*2, UnityEngine.Random.Range(1,3)*2+1 };
-		frequency_offsets = new float[] { UnityEngine.Random.Range(0.0f,Mathf.PI*2), UnityEngine.Random.Range(0.0f,Mathf.PI*2) };
-		irregularity = 1.0f;//p.irregularity;
-		
+		//m_frequencies = new int[] { UnityEngine.Random.Range(1,5)*2, UnityEngine.Random.Range(1,3)*2+2 };
+		//m_frequency_offsets = new float[] { UnityEngine.Random.Range(0.0f,Mathf.PI*2), UnityEngine.Random.Range(0.0f,Mathf.PI*2) };
+		m_frequencies = new int[] { p.m_trunk_freq_1, p.m_trunk_freq_2 };
+		m_frequency_offsets = new float[] { p.m_trunk_freq_off_1, p.m_trunk_freq_off_2 };
+
+
 		// Define radius function
-		/*
-		Func<float, float> radiusFunction = (float) => {
+		// Function has 2 arguments - angle and height
+		// Both are normalised and vary between 0 and 1
+		float height = 0;
+		Func<float, float> radiusFunction = (angle) => {
 
 			float radius = 0;
 			for (int i = 0; i < 2; i++) 
 			{
-				radius += Mathf.Sin( 2*Mathf.PI * frequencies[i] * value + frequency_offsets[i]);
+				radius += 0.5f*Mathf.Sin( 2*Mathf.PI * m_frequencies[i] * angle + m_frequency_offsets[i]) + 0.5f;
 			}
-			return radius * irregularity;
-
-			//float ro1 = Mathf.Sin(f1*((float)i/(float)segments)*2*Mathf.PI + angle_offset1);
-			//float ro2 = Mathf.Sin(f2*((float)i/(float)segments)*2*Mathf.PI + angle_offset2);
-			//float r = radius+(ro1+ro2);
+			// Exponential coefficients
+			float A = 1.0f;
+			float b = p.m_trunk_irregularity_coeff;
+			float c = -Mathf.Log(A);
+			// Exponential falloff * linear falloff (to ensure final value is zero)
+			float height_falloff = (A * Mathf.Exp(c-height*b)) * Mathf.Lerp(1.0f,0.0f,height);
+			return 1 + radius * height_falloff * p.m_trunk_irregularity;
 		};
-		*/
 
 		// Offset radius randomly
 		
 
 		Vector3 ring_centre = offset;
 		Quaternion rotation = Quaternion.identity;
-		Vector3 angle_rand;
-		angle_rand = new Vector3(UnityEngine.Random.Range(-p.m_max_bend,p.m_max_bend),UnityEngine.Random.Range(-p.m_max_bend,p.m_max_bend),UnityEngine.Random.Range(-p.m_max_bend,p.m_max_bend));
 		
-		//MeshBuilder meshBuilder, Vector3 position, Quaternion rotation, int segments, float baseRadius, 
-		//Func<float,float> radiusFunction, bool buildTriangles
-		//Func<float,float> radiusFunction;
-		//BuildCurve(meshBuilder,offset,p.m_start_radius,p.m_radial_segments,0.0f,f1,f2,angle_offset1,angle_offset2,Quaternion.identity,0.0f,p.m_start_irregularity,false);
-		//BuildCurve(meshBuilder,ring_centre,rotation,p.m_radial_segments,p.m_start_radius,radiusFunction,false);
+		BuildRing(meshBuilder,ring_centre,rotation,p.m_radial_segments,0.0f,p.m_start_radius,radiusFunction,false);
 		for(int i = 1; i <= p.m_height_segments; i++) {
-			float ring_height = ((float)i/(float)p.m_height_segments)*p.m_height;
-			float radius = 1.0f;
+			float t = (float)i/(float)p.m_height_segments;
+			height = t;
+			float ring_height = t*p.m_height;
+			float radius = p.m_start_radius; 
 			
-			if(p.m_trunk_curve_type_s == TrunkCurveType.Circular) {
-				radius = p.m_circ_trunk_bulge*Mathf.Sin((Mathf.PI*p.m_circ_trunk_bulge_freq*ring_height)/p.m_height+p.m_circ_trunk_bulge_offset)+(p.m_end_radius-p.m_start_radius)*ring_height/p.m_height + p.m_start_radius;
-			} else if(p.m_trunk_curve_type_s == TrunkCurveType.Exponential || p.m_trunk_curve_type_s == TrunkCurveType.ExpoLinear) {
-				bool isExpoLin = p.m_trunk_curve_type_s == TrunkCurveType.ExpoLinear;
-				if(isExpoLin) {
-					radius = ExpoLinInterp(p.m_start_radius,p.m_exp_mid_radius,p.m_end_radius,p.m_height,ring_height,p.m_expolinear_blend);
-				} else {
-					radius = ExpoLinInterp(p.m_start_radius,p.m_exp_mid_radius,p.m_end_radius,p.m_height,ring_height);
-				}
-			}
 			
-			float twist_angle = (ring_height*p.m_twist_angle)/p.m_height;
+			//float twist_angle = (ring_height*p.m_twist_angle)/p.m_height;
 			
-			float hr = (ring_height/p.m_height);
-			rotation = Quaternion.Euler(angle_rand.x*hr,angle_rand.y*hr,angle_rand.z*hr);
-			Vector3 new_ring_offset = new Vector3(0.0f,p.m_height/(float)p.m_height_segments,0.0f);
-			ring_centre += rotation * new_ring_offset;
+			Vector3 upDirection = Vector3.up; // Change this to bezier tangent
+
+			rotation *= Quaternion.AngleAxis(p.m_twist_angle, upDirection);
+
+			//float hr = (ring_height/p.m_height);
+			//rotation = Quaternion.Euler(angle_rand.x*hr,angle_rand.y*hr,angle_rand.z*hr);
+			//Vector3 new_ring_offset = new Vector3(0.0f,p.m_height/(float)p.m_height_segments,0.0f);
+			float ringSpacing = p.m_height/(float)p.m_height_segments;
+			ring_centre += upDirection * ringSpacing;
 			
 			float v = ring_height/(2*Mathf.PI*radius);
 			
 			//BuildCurve(meshBuilder,ring_centre,radius,p.m_radial_segments,v,f1,f2,angle_offset1,angle_offset2,rotation,twist_angle,irregularity,true);
 			
-			//BuildCurve(meshBuilder,ring_centre,rotation,p.m_radial_segments,radius,radiusFunction,true);
+			BuildRing(meshBuilder,ring_centre,rotation,p.m_radial_segments,v,radius,radiusFunction,true);
 
 			if(i==p.m_height_segments) {
+				// This is the final segment
+
+				// Build a fork
+
+				// Major branch
+				float branchAngle = p.m_branch_fork_angle-180;
+				float branchRadius = 0.707f * radius * Mathf.Sqrt(1 - Mathf.Sin(branchAngle * Mathf.Deg2Rad));
+				float branchDirectionAngle = (90 + branchAngle)/2;
+				Vector3 branchDirection = Quaternion.Euler(0,0,branchDirectionAngle) * Vector3.up;
+				Quaternion branchRotation = rotation * Quaternion.Euler(0,0,branchDirectionAngle);
+				Vector3 branchStartOffset = branchDirection*radius;
+				BuildRing(meshBuilder,ring_centre + branchStartOffset,branchRotation,p.m_radial_segments,0.0f,branchRadius,true);
+
+				BuildRing(meshBuilder,ring_centre + branchStartOffset + branchDirection*4,branchRotation,p.m_radial_segments,1.0f,branchRadius,true);
+
+				// Minor branch
+				branchAngle = p.m_branch_fork_angle;
+				branchRadius = 0.707f * radius * Mathf.Sqrt(1 - Mathf.Sin(branchAngle * Mathf.Deg2Rad));
+				branchDirectionAngle = (90 + branchAngle)/2;
+				branchDirection = Quaternion.Euler(0,0,branchDirectionAngle) * Vector3.up;
+				branchRotation = rotation * Quaternion.Euler(0,0,branchDirectionAngle);
+				branchStartOffset = branchDirection*radius/2;
+				BuildRing(meshBuilder,ring_centre + branchStartOffset,branchRotation,p.m_radial_segments,0.0f,branchRadius,false);
+
+				BuildRing(meshBuilder,ring_centre + branchStartOffset + branchDirection*4,branchRotation,p.m_radial_segments,1.0f,branchRadius,true);
+
+				// Build two branches from fork
+
+
+
+
+				/*
 				// Add twist angle to rotation for complete angle reference
 				Quaternion rotationRef = rotation*Quaternion.Euler(0.0f,-p.m_twist_angle,0.0f);
-				//LODRandNums.Add(radius);
+				LODRandNums.Add(radius);
 				BuildFork(meshBuilder,ring_centre,radius,rotationRef,p.m_branch_segments,p.m_radial_segments,new Vector2(p.m_branch_min_fork_angle,p.m_branch_max_fork_angle),
 						  p.m_branch_max_bend,p.m_branch_length,p.m_branch_length_randomness,p.m_branch_twist_angle,p.m_branch_twist_randomness);
 				break;
+				*/
 			}
 		}
 		Mesh mesh = meshBuilder.CreateMesh();
@@ -128,12 +208,14 @@ public class PGTreeTrunkSimple : PGBase {
 		return mesh;
 	}
 	
+
+/*
 	// Creates a fork and builds 2 branches off it
 	// -> radiusRef: radius of trunk
 	// -> angleRef: angle of the final trunk ring
 	void BuildFork(MeshBuilder meshBuilder,Vector3 offset,float radiusRef,Quaternion angleRef,int lengthSegments,int radialSegments,Vector2 forkAngleBounds,float maxBendAngle,float branchLength,float lengthRandomness,float branchTwist,float twistRandomness) {
 		// Calculate a random angle for branches to leave from
-		float forkAngle = UnityEngine.Random.Range(forkAngleBounds.x,forkAngleBounds.y) * (Random.Range(0,1)==1 ? 1:-1); // angle of the fork ring (vertices curving between branches)
+		float forkAngle = Random.Range(forkAngleBounds.x,forkAngleBounds.y) * (Random.Range(0,1)==1 ? 1:-1); // angle of the fork ring (vertices curving between branches)
 		
 		float angle_A = (Mathf.PI/4.0f) + (forkAngle*Mathf.Deg2Rad)/2.0f;
 		float angle_B = (Mathf.PI/4.0f) - (forkAngle*Mathf.Deg2Rad)/2.0f;
@@ -175,34 +257,14 @@ public class PGTreeTrunkSimple : PGBase {
 	void BuildBranch(MeshBuilder meshBuilder,Vector3 offset,float startRadius,Quaternion startAngle,int lengthSegments,int radialSegments,Vector2 forkAngleBounds,float maxBendAngle,float branchLength,float lengthRandomness,float branchTwist,float twistRandomness,bool startTriangles,bool useMinRadius,bool generateLOD) {
 		
 		PGTreeBase p = transform.parent.GetComponent("PGTreeBase") as PGTreeBase;
-		
-/*
-
-		// Calculate a random bend towards the sky
-		Vector3 angleRand = Vector3.zero;
-		Vector3 testVector = Vector3.down;
-		float maxAngle = maxBendAngle;
-		for(int i = 0; i < 100 && testVector.y <= p.m_branch_min_uprightness; i++) {
-			angleRand = new Vector3(Random.Range(-maxAngle,maxAngle),Random.Range(-maxAngle,maxAngle),Random.Range(-maxAngle,maxAngle));
-			maxAngle += 30;
-			Quaternion newRot = startAngle*Quaternion.Euler(angleRand.x,angleRand.y,angleRand.z);
-			testVector = newRot*Vector3.up;
-			if(i == 99) {
-				Debug.LogError("Maximum iterations reached. Bend angle may not be upright!");
-			}
-		}
-		LODRandNums.Add(angleRand.x);
-		LODRandNums.Add(angleRand.y);
-		LODRandNums.Add(angleRand.z);
-		*/
 
 		Vector3 ringCentre = offset;
 		Quaternion rotation = Quaternion.identity;
 		
 		float twistRand = branchTwist+Random.Range(-twistRandomness,twistRandomness);
 		float lengthRand = branchLength + Random.Range(-lengthRandomness,lengthRandomness);
-		//LODRandNums.Add(twistRand);
-		//LODRandNums.Add(lengthRand);
+		LODRandNums.Add(twistRand);
+		LODRandNums.Add(lengthRand);
 		
 		float radius = startRadius;
 
@@ -237,49 +299,13 @@ public class PGTreeTrunkSimple : PGBase {
 				break;
 			}
 			BuildCurve(meshBuilder,ringCentre,radius,radialSegments,v,0,0,0.0f,0.0f,startAngle*rotation,twistAngle,0,buildTriangles);
-			//rotation = Quaternion.Euler(angleRand*((float)i/(float)(lengthSegments+1)));
+			rotation = Quaternion.Euler(angleRand*((float)i/(float)(lengthSegments+1)));
 			ringCentre += startAngle*rotation*new Vector3(0.0f,lengthRand/(float)lengthSegments,0.0f);
 		}
 		
 	}
-	
-	void BuildStems(MeshBuilder meshBuilder, Vector3 offset, Quaternion rotation,float length,float radius,int segments,float bendAngle) {
-		PGTreeBase p = transform.parent.GetComponent("PGTreeBase") as PGTreeBase;
-		for(int i = 0; i < p.m_leaves_per_branch; i++) {
-			Quaternion stemRotation = rotation*Quaternion.Euler(0.0f,(360*(float)i)/(float)p.m_leaves_per_branch,0.0f)*Quaternion.Euler(0.0f,0.0f,p.m_stem_start_angle);
-			BuildBranch(meshBuilder,offset,radius,stemRotation,segments,3,new Vector2(0.0f,0.0f),0.0f,length,0.0f,0.0f,0.0f,false,false);
-		}
-	}
-	
-	void BuildCurve(MeshBuilder meshBuilder, Vector3 offset, float radius, int segments,
-					float v, Quaternion rotation, bool buildTriangles) {
-		BuildCurve(meshBuilder,offset,radius,segments,v,0,0,0.0f,0.0f,rotation,0.0f,0.0f,buildTriangles,0);
-			
-	}
-	
-	void BuildCurve(MeshBuilder meshBuilder, Vector3 offset, float radius, int segments,
-					float v, Quaternion rotation, bool buildTriangles, float circDivide) {
-		BuildCurve(meshBuilder,offset,radius,segments,v,0,0,0.0f,0.0f,rotation,0.0f,0.0f,buildTriangles,0,circDivide);
-			
-	}
-		
-	void BuildCurve(MeshBuilder meshBuilder, Vector3 offset, float radius, int segments,
-					float v, int f1, int f2, float angle_offset1, float angle_offset2, 
-					Quaternion rotation, float twist_angle, float irregularity, bool buildTriangles) 
-	{
-		BuildCurve(meshBuilder,offset,  radius,  segments,
-					 v,  f1,  f2,  angle_offset1,  angle_offset2, 
-					rotation, twist_angle, irregularity, buildTriangles, 0);
-	}
-	
-	void BuildCurve(MeshBuilder meshBuilder, Vector3 offset, float radius, int segments,
-					float v, int f1, int f2, float angle_offset1, float angle_offset2, 
-					Quaternion rotation, float twist_angle, float irregularity, bool buildTriangles, int branchVertices) 
-	{
-		BuildCurve(meshBuilder,offset,  radius,  segments,
-					 v,  f1,  f2,  angle_offset1,  angle_offset2, 
-					rotation, twist_angle, irregularity, buildTriangles, branchVertices,1.0f);
-	}
+*/
+/*
 	void BuildCurve(MeshBuilder meshBuilder, Vector3 offset, float radius, int segments,
 					float v, int f1, int f2, float angle_offset1, float angle_offset2, 
 					Quaternion rotation, float twist_angle, float irregularity, bool buildTriangles, int branchVertices, float circDivide) 
@@ -314,95 +340,49 @@ public class PGTreeTrunkSimple : PGBase {
 			}
 		}
 	}
-	
+*/
+
+	void BuildRing(MeshBuilder meshBuilder, Vector3 position, Quaternion rotation, int segments, float v, float baseRadius, bool buildTriangles)
+	{
+		BuildRing(meshBuilder,position,rotation,segments,v,baseRadius,(value) => { return 1.0f; }, buildTriangles);
+	}
+
 	// Creates a ring of (segments+1) vertices at the given position and rotation.
 	// If a radiusFunction is given, it can be used to offset the radius based on the normalized angle (360 deg = 1.0)
 	// If buildTriangles is set to true, function assumes a previous ring of the same number of segments was created
 	// and creates triangles to form a cylinder.
-	//void BuildRing(MeshBuilder meshBuilder, Vector3 position, Quaternion rotation, int segments, float baseRadius, 
-	//	Func<float,float> radiusFunction, bool buildTriangles) {
+	void BuildRing(MeshBuilder meshBuilder, Vector3 position, Quaternion rotation, int segments, float v, float baseRadius, Func<float,float> radiusFunction, bool buildTriangles) {
 
-	//}
-
-	/*
-	private void BuildCurveSimple(MeshBuilder meshBuilder, Vector3 offset, float radius, int segments,float v,
-								  Quaternion rotation, float twist_angle, bool buildTriangles) 
-	{
-		BuildCurveSimple(meshBuilder,offset,radius,segments,v,rotation,twist_angle,buildTriangles,0);
-	}
-	
-	private void BuildCurveSimple(MeshBuilder meshBuilder, Vector3 offset, float radius, int segments,float v,
-								  Quaternion rotation, float twist_angle, bool buildTriangles, int branchVertices)
-	{
 		for(int i = 0; i <= segments; i++) {
+
+			float t = (float)i/(float)segments;
+
 			// Calculate vertex position
-			float theta = (Mathf.PI*2.0f*(float)i)/(float)segments + twist_angle*Mathf.Deg2Rad;
+			float angle = Mathf.PI*2.0f*t;
+			// Apply radius function
+			float r = baseRadius * radiusFunction(t);
 			
-			float x = Mathf.Cos(theta)*radius;
+			float x = Mathf.Cos(angle)*r;
 			float y = 0.0f;
-			float z = Mathf.Sin(theta)*radius;
+			float z = Mathf.Sin(angle)*r;
 			//
 			
 			// Set normals to face along radial line
-			meshBuilder.Normals.Add(new Vector3(Mathf.Cos(theta), 0, Mathf.Sin(theta)));
-			meshBuilder.Vertices.Add((rotation * new Vector3(x,y,z)) + offset);
-			meshBuilder.UVs.Add(new Vector2(i/(float)(segments),v));
+			meshBuilder.Normals.Add(new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)));
+			meshBuilder.Vertices.Add((rotation * new Vector3(x,y,z)) + position);
+			meshBuilder.UVs.Add(new Vector2(t,v));
 			
 			if(buildTriangles) {
 				int baseIndex = meshBuilder.Vertices.Count-1;
 				
 				if(i != 0) {
-					meshBuilder.AddTriangle(baseIndex,baseIndex-segments-branchVertices-1,baseIndex-1);
+					meshBuilder.AddTriangle(baseIndex,baseIndex-segments-1,baseIndex-1);
 				}
 				if(i != segments) {
-					meshBuilder.AddTriangle(baseIndex,baseIndex-segments-branchVertices,baseIndex-segments-branchVertices-1);
+					meshBuilder.AddTriangle(baseIndex,baseIndex-segments,baseIndex-segments-1);
 				}
 			}
 		}
-	}
-	*/
 
-	/*
-	public Vector3 Bezier(Vector3 start, Vector3 controlMid1, Vector3 controlMid2, Vector3 end, float t)
-	{
-		float t2 = t * t;
-		float t3 = t2 * t;
-
-		float mt = 1 - t;
-		float mt2 = mt * mt;
-		float mt3 = mt2 * mt;
-
-		return start * mt3 + controlMid1 * mt2 * t * 3.0f + controlMid2 * mt * t2 * 3.0f + end * t3;
-	}
-
-	public Vector3 BezierTangent(Vector3 start, Vector3 controlMid1, Vector3 controlMid2, Vector3 end, float t)
-	{
-		float t2 = t * t;
-
-		float mt = 1 - t;
-		float mt2 = mt * mt;
-
-		float mid = 2.0f * t * mt;
-
-		Vector3 tangent = start * -mt2 + controlMid1 * (mt2 - mid) + controlMid2 * (-t2 + mid) + end * t2;
-
-		return tangent.normalized;
-	}
-	*/
-	
-	public float ExpoLinInterp(float startRadius, float midRadius, float endRadius, float endHeight,float interpHeight) {
-		return ExpoLinInterp(startRadius,midRadius,endRadius,endHeight,interpHeight,0.0f);			
-	}
-	public float ExpoLinInterp(float startRadius, float midRadius, float endRadius, float endHeight, float interpHeight, float linearBlend) {
-		float rm = midRadius;
-		float r0 = startRadius;
-		float rf = endRadius;
-		float hf = endHeight;
-				
-		if(rf+r0 == 2*rm) {rm+=0.001f;} // Avoid DIV-by-0
-		float M = (Mathf.Pow(rm,2)-2*rm*r0+Mathf.Pow(r0,2))/(rf-2*rm+r0);
-		float c = r0-M;
-		float alpha = (-1/hf)*Mathf.Log(((rf-r0)/M)+1);
-		return M*Mathf.Exp(-alpha*interpHeight)+c - (interpHeight*endRadius*linearBlend)/endHeight;
 	}
 }

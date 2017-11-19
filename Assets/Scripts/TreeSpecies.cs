@@ -24,6 +24,12 @@ public class TreeSpecies : MonoBehaviour {
 	public float m_expolinear_blend = 0.2f;
 	public float m_start_irregularity = 0.3f;
 	public float m_irregularity_falloff = 5.0f;
+	public float m_trunk_irregularity = 1.0f;
+	public float m_trunk_irregularity_coeff = 1.0f;
+	public int m_trunk_freq_1 = 1;
+	public float m_trunk_freq_off_1 = 0.0f;
+	public int m_trunk_freq_2 = 1;
+	public float m_trunk_freq_off_2 = 0.0f;
 	public int m_radial_segments = 8;
 	public int m_height_segments = 10;
 	
@@ -40,6 +46,7 @@ public class TreeSpecies : MonoBehaviour {
 	public float m_branch_bend_falloff = 0.8f;
 	public float m_branch_min_uprightness = 0.5f;
 	
+	public float m_branch_fork_angle = 45.0f;
 	public float m_branch_min_fork_angle = 0f;
 	public float m_branch_max_fork_angle = 75f;
 	public float m_branch_twist_angle = 90f;

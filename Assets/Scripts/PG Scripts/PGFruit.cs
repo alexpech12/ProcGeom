@@ -5,12 +5,14 @@ public class PGFruit : PGBase {
 	
 	public float maxRadius = 0.0f;
 	
+	/*
 	public override Mesh BuildLODMesh (int LODindex)
 	{
 		throw new System.NotImplementedException ();
 	}
+	*/
 	
-	public override Mesh BuildMesh (bool setupLODs)
+	public override Mesh BuildMesh (/*bool setupLODs*/)
 	{
 		FruitBase b = gameObject.GetComponent<FruitBase>();
 		MeshBuilder meshBuilder = new MeshBuilder();
@@ -108,10 +110,12 @@ public class PGFruit : PGBase {
 		return tangent.normalized;
 	}
 	
+	/*
 	public override void GenerateLODs (LODManager lodManager, MeshFilter filter)
 	{
 		throw new System.NotImplementedException ();
 	}
+	*/
 	
 	
 }

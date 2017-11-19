@@ -8,6 +8,7 @@ public class PGTreeLeaf : PGBase {
 		Spherical
 	};
 	
+	/*
 	public override void GenerateLODs (LODManager lodManager, MeshFilter filter)
 	{
 		lodManager.SetLODMesh(filter.sharedMesh,0);
@@ -15,11 +16,13 @@ public class PGTreeLeaf : PGBase {
 		//lodManager.SetLODMesh(BuildLODMesh(1),1);
 		//lodManager.SetLODMesh(BuildLODMesh(2),2);
 	}
-	public override Mesh BuildMesh(bool setupLODs)
+	*/
+	public override Mesh BuildMesh(/*bool setupLODs*/)
 	{
 		return BuildLeaves();
 	}
 	
+	/*
 	public override Mesh BuildLODMesh (int LODindex)
 	{
 		switch(LODindex) {
@@ -35,7 +38,8 @@ public class PGTreeLeaf : PGBase {
 		}
 		return null;
 	}
-	
+	*/
+
 	public Mesh BuildLeaves() {
 		
 		PGTreeBase p = transform.parent.GetComponent("PGTreeBase") as PGTreeBase;
@@ -60,6 +64,7 @@ public class PGTreeLeaf : PGBase {
 		return mesh;
 	}
 	
+	/*
 	public Mesh BuildLOD1Leaves() {
 		PGTreeBase p = transform.parent.GetComponent("PGTreeBase") as PGTreeBase;
 		PGTreeTrunkSimple trunk = transform.parent.GetComponentInChildren<PGTreeTrunkSimple>();
@@ -97,7 +102,7 @@ public class PGTreeLeaf : PGBase {
 		return mesh;
 		
 	}
-	
+	*/
 	private void BuildLeaf(MeshBuilder meshBuilder,Vector3 position,Vector3 offset,Quaternion rotation,float length,float width,float lengthRand,float widthRand,
 						   int lengthSegments,int widthSegments,float bend,float bendRand,float curl,float curlRand,float twist,float twistRand,bool backSide,bool leafVariation) {
 		

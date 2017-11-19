@@ -85,6 +85,7 @@
      <Compile Include="Assets\Scripts\PG Scripts\PGPlane.cs" />
      <Compile Include="Assets\Scripts\PG Scripts\PGQuad.cs" />
      <Compile Include="Assets\Scripts\PG Scripts\PGRock.cs" />
+     <Compile Include="Assets\Scripts\PG Scripts\PGTree.cs" />
      <Compile Include="Assets\Scripts\PG Scripts\PGTree2.cs" />
      <Compile Include="Assets\Scripts\PG Scripts\PGTreeBase.cs" />
      <Compile Include="Assets\Scripts\PG Scripts\PGTreeLeaf.cs" />
@@ -101,6 +102,7 @@
      <Compile Include="Assets\Scripts\Test Scripts\HeadBuilderTest.cs" />
      <Compile Include="Assets\Scripts\Test Scripts\LegSolverTest.cs" />
      <Compile Include="Assets\Scripts\Test Scripts\SpineSolverTest.cs" />
+     <Compile Include="Assets\Scripts\Test Scripts\TreeForkTest.cs" />
      <Compile Include="Assets\Scripts\Test Scripts\TreeTest.cs" />
      <Compile Include="Assets\Scripts\TestScript.cs" />
      <Compile Include="Assets\Scripts\TextureBuilder.cs" />

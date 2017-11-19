@@ -29,7 +29,15 @@ public class TreeSpeciesSliderUpdate : MonoBehaviour {
 		CreateSlider("Trunk Max Bend", "m_max_bend", -90.0f, 90.0f);
 		CreateDropdown("Trunk Curve Type", "m_trunk_curve_type_s");
 		//CreateSlider("Blending", "m_expolinear_blend", 0.0f, 1.0f);
-		//CreateSlider("Irregularity", "m_start_irregularity", 0.0f, 1.0f);
+		CreateSlider("Radial Segments", "m_radial_segments",3,24);
+		CreateSlider("Height Segments", "m_height_segments",1,12);
+		CreateSlider("Trunk Frequency 1", "m_trunk_freq_1", 1, 8);
+		CreateSlider("Trunk Freq Offset 1", "m_trunk_freq_off_1", 0.0f, 2*Mathf.PI);
+		CreateSlider("Trunk Frequency 2", "m_trunk_freq_2", 1, 8);
+		CreateSlider("Trunk Freq Offset 2", "m_trunk_freq_off_2", 0.0f, 2*Mathf.PI);
+		CreateSlider("Irregularity", "m_trunk_irregularity", 0.0f, 1.0f);
+		CreateSlider("Irregularity Coeff", "m_trunk_irregularity_coeff", 0.0f, 5.0f);
+		
 		//CreateSlider("Irregularity Falloff", "m_irregularity_falloff", 0.0f, 10.0f);
 
 		CreateSlider("Branch Segments", "m_branch_segments",1,10);
@@ -40,6 +48,7 @@ public class TreeSpeciesSliderUpdate : MonoBehaviour {
 		CreateSlider("Branch Max Bend", "m_branch_max_bend", 0.0f, 90.0f);
 		CreateSlider("Branch Bend Falloff", "m_branch_bend_falloff", 0.0f, 5.0f);
 		CreateSlider("Branch Min Upright", "m_branch_min_uprightness", 0.0f, 0.95f);
+		CreateSlider("Branch Fork Angle", "m_branch_fork_angle", 0f,90.0f);
 		CreateSlider("Branch Fork Angle Min", "m_branch_min_fork_angle", -90.0f, 90.0f);
 		CreateSlider("Branch Fork Angle Max", "m_branch_max_fork_angle", -90.0f, 90.0f);
 		CreateSlider("Branch Twist Angle", "m_branch_twist_angle", -180.0f, 180.0f);

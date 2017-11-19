@@ -130,11 +130,12 @@ public class PGTreeBase : MonoBehaviour {
 		//trunkObject.transform.parent = transform;
 		trunkObject = gameObject.EnsureChildGameObject("Trunk");
 		trunkObject.transform.localPosition = Vector3.zero; // Remove offset from parenting
-		PGTreeTrunkSimple trunkScript = trunkObject.EnsureComponent<PGTreeTrunkSimple>(); //trunkObject.AddComponent<PGTreeTrunkSimple>();
+		//PGTreeTrunkSimple trunkScript = trunkObject.EnsureComponent<PGTreeTrunkSimple>(); //trunkObject.AddComponent<PGTreeTrunkSimple>();
+		PGTree trunkScript = trunkObject.EnsureComponent<PGTree>();
 		trunkObject.EnsureComponent<MeshRenderer>(); //trunkObject.AddComponent<MeshRenderer>();
 		trunkObject.GetComponent<Renderer>().material = treeSpecies.m_trunk_mat;
 		
-		trunkScript.CreateObject(false);
+		trunkScript.CreateObject();
 		
 		// Add collider
 		collider = trunkObject.EnsureComponent<CapsuleCollider>();
@@ -150,7 +151,7 @@ public class PGTreeBase : MonoBehaviour {
 			leafObject.EnsureComponent<MeshRenderer>();
 			leafObject.GetComponent<Renderer>().material = treeSpecies.m_leaf_mat;
 
-			leafScript.CreateObject(false);
+			leafScript.CreateObject();
 		} else {
 			Transform leafTransform = transform.Find("Leaves");
 			if(leafTransform != null) {

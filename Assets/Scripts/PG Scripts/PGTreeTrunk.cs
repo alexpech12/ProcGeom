@@ -27,21 +27,23 @@ public class PGTreeTrunk : PGBase {
 	public List<LeafConstruct> Leaves { get { return m_Leaves; } }
 	private List<LeafConstruct> m_Leaves = new List<LeafConstruct>();
 	
+	/*
 	public override void GenerateLODs (LODManager lodManager, MeshFilter filter)
 	{
 		throw new System.NotImplementedException ();
 	}
-	
-	public override Mesh BuildMesh(bool setupLODs)
+	*/
+	public override Mesh BuildMesh(/*bool setupLODs*/)
 	{
 		return BuildTrunk();
 	}
 	
+	/*
 	public override Mesh BuildLODMesh (int LODindex)
 	{
 		throw new System.NotImplementedException ();
 	}
-	
+	*/
 	public Mesh BuildTrunk() {
 		
 		// Set variables from parent

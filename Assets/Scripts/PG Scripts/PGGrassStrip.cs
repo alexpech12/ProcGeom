@@ -4,22 +4,25 @@ using System.Collections;
 public class PGGrassStrip : PGBase {
 	
 	void Start() {
-		CreateObject(true);
+		CreateObject(/*true*/);
 		CreateTexture();
 	}
 	
+	/*
 	public override Mesh BuildLODMesh (int LODindex)
 	{
 		return null;
 	}
-	
+	*/
+	/*
 	public override void GenerateLODs (LODManager lodManager, MeshFilter filter)
 	{
 		lodManager.SetLODMesh(filter.sharedMesh,0);
 		lodManager.SetLODDistance(50.0f,0);
 	}
+	*/
 	
-	public override Mesh BuildMesh (bool setupLODs)
+	public override Mesh BuildMesh (/*bool setupLODs*/)
 	{
 		MeshBuilder meshBuilder = new MeshBuilder();
 		//BuildQuad(meshBuilder,Vector3.zero,new Vector2(0.0f,0.0f),false,2,new Vector3(1.0f,0.0f,0.0f),true);

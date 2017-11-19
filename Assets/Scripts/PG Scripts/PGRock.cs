@@ -9,7 +9,7 @@ public class PGRock : PGBase {
 	
 	public int m_deform_iterations = 1;
 	
-	public override Mesh BuildMesh (bool setupLODs)
+	public override Mesh BuildMesh (/*bool setupLODs*/)
 	{
 		MeshBuilder meshBuilder = new MeshBuilder();
 		BuildSphere(meshBuilder, new Vector3(0.0f,0.0f,0.0f),m_radius,m_height_segments,m_radial_segments);
@@ -84,6 +84,7 @@ public class PGRock : PGBase {
 		}
 	}
 	
+	/*
 	public override Mesh BuildLODMesh (int LODindex)
 	{
 		throw new System.NotImplementedException ();
@@ -93,4 +94,5 @@ public class PGRock : PGBase {
 	{
 		throw new System.NotImplementedException ();
 	}
+	*/
 }
